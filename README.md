@@ -18,11 +18,26 @@ SpringSecurity 를 이용하여 OAuth2 인증 서버 자체 구현한 프로젝�
 위 사이트의 *2.7 인증 Client 정보 생성* 을 참고해라.
     
 ### 3. 비대칭키 생성 (JWT 토큰의 무결성 검증에 사용할 Private Key, Public Key)
-1. authentication-server
-> oauth2jwt.jks 파일 생성
 
-2. resource-server
-> publicKey.txt 파일 생성
+비대칭 키 방식은 인증 서버가 비밀키와 공개키 1쌍을 만든다. 데이터는 공개키로 암호화되고, 비밀키로만 복호화가 가능하다.
+
+인증 서버는 리소스 서버에게 공개키를 공유하고 해당 키로 암호화하여 데이터를 전달해달라고한다.
+
+1. CMD에서 아래 명령어를 치면 oauth2jwt.jks 파일이 생성된다.
+```
+λ keytool -genkeypair -alias oauth2jwt -keyalg RSA -keypass oauth2jwtpass -keystore oauth2jwt.jks -storepass oauth2jwtpass
+```
+
+2. authentication-server
+> oauth2jwt.jks 파일 src/main/resources 경로에 넣기
+
+3. resource-server
+> publicKey.txt 파일 src/main/resources 경로에 넣기
+```
+-----BEGIN PUBLIC KEY-----
+<public key value>
+-----END PUBLIC KEY-----
+```
 
 ### 4. 프로젝트 정상 구동 확인
 
