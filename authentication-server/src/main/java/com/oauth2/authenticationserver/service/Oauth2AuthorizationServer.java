@@ -3,9 +3,9 @@ package com.oauth2.authenticationserver.service;
 import com.oauth2.authenticationserver.config.CommonConfiguration;
 import com.oauth2.authenticationserver.vo.TokenTypeEnum;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 import javax.sql.DataSource;
+import java.security.KeyPair;
 
 @Configuration
 @RequiredArgsConstructor
@@ -55,7 +56,6 @@ public class Oauth2AuthorizationServer extends AuthorizationServerConfigurerAdap
             case JWT:
                 super.configure(endpoints);
                 endpoints.accessTokenConverter(jwtAccessTokenConverter())
-                        .tokenStore(new JwtTokenStore(jwtAccessTokenConverter()))
                         .userDetailsService(userDetailsService);
                 break;
             default:
@@ -74,9 +74,10 @@ public class Oauth2AuthorizationServer extends AuthorizationServerConfigurerAdap
 
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new FileSystemResource("src/main/resources/oauth2jwt.jks"), "oauth2jwtpass".toCharArray());
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setKeyPair(keyStoreKeyFactory.getKeyPair("oauth2jwt"));
+        KeyPair keyPair = new KeyStoreKeyFactory(new ClassPathResource("oauth2jwt.jks"), "oauth2jwtpass".toCharArray())
+                .getKeyPair("oauth2jwt","oauth2jwtpass".toCharArray());
+        converter.setKeyPair(keyPair);
         return converter;
     }
 }

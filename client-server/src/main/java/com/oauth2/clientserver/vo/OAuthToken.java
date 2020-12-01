@@ -12,7 +12,8 @@ import lombok.ToString;
 @ToString
 public class OAuthToken {
     private static final long serialVersionUID = 1L;
-
+    @SerializedName(value = "ID_TOKEN", alternate = "id_token")
+    private final String idToken;
     @SerializedName(value = "ACESS_TOKEN", alternate = "access_token")
     private final String accessToken;
     @SerializedName(value = "TOKEN_TYPE", alternate = "token_type")
@@ -27,7 +28,8 @@ public class OAuthToken {
     private final String jti;
 
     @Builder
-    public OAuthToken(String accessToken, String tokenType, String refreshToken, long expiresIn, String scope, String jti) {
+    public OAuthToken(String idToken, String accessToken, String tokenType, String refreshToken, long expiresIn, String scope, String jti) {
+        this.idToken = idToken;
         this.accessToken = accessToken;
         this.tokenType = tokenType;
         this.refreshToken = refreshToken;
