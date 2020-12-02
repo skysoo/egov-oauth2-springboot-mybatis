@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.egovspringbootmybatis.mapper.UserInfoMapper">
+
+    <resultMap id="userInfoResult" type="com.study.egovspringbootmybatis.vo.UserInfoVO">
+        <result column="uid" property="uid"/>
+        <result column="password" property="password"/>
+        <result column="name" property="name"/>
+        <result column="provider" property="provider"/>
+    </resultMap>
+
+    <select id="searchByAll" resultMap="userInfoResult">
+        SELECT "EPZOAUTH"."user_info".*
+        FROM "EPZOAUTH"."user_info"
+    </select>
+
+    <select id="selectDataById" parameterType="String" resultMap="userInfoResult">
+        SELECT "EPZOAUTH"."user_info".*
+        FROM "EPZOAUTH"."user_info"
+        WHERE
+        <if test="value != null">"uid" = #{value}</if>
+    </select>
+
+    <!--  SelectKey를 통해 SeqId 값 추출  -->
+    <insert id="insertData" parameterType="com.study.egovspringbootmybatis.vo.UserInfoVO">
+
+        insert into "EPZOAUTH"."user_info"
+            ("uid", "password","name","provider","roles")
+        values
+            (#{uid},#{password},#{name},#{provider},#{roles})
+    </insert>
+
+    <update id="updateData" parameterType="com.study.egovspringbootmybatis.vo.UserInfoVO">
+    </update>
+
+    <delete id="deleteData" parameterType="String">
+        DELETE FROM "EPZOAUTH"."user_info"
+        WHERE
+        <if test="value != null">"uid" = #{value }</if>
+    </delete>
+</mapper>
