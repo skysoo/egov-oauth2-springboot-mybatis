@@ -1,4 +1,4 @@
-package com.study.egovspringbootmybatis.service;
+package com.study.egovspringbootmybatis.dao.impl;
 
 import com.study.egovspringbootmybatis.dao.UserInfoDao;
 import com.study.egovspringbootmybatis.mapper.UserInfoMapper;
