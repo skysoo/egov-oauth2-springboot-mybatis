@@ -1,4 +1,4 @@
-package com.study.egovspringbootmybatis.utility;
+package com.study.egovspringbootmybatis.service;
 
 public interface ThrowingConsumer<T, E extends Exception> {
     void accept(T t) throws E;

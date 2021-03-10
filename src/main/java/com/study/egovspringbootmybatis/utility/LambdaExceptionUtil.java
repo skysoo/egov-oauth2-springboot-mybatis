@@ -1,5 +1,7 @@
 package com.study.egovspringbootmybatis.utility;
 
+import com.study.egovspringbootmybatis.service.FunctionWithException;
+import com.study.egovspringbootmybatis.service.ThrowingConsumer;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.function.Consumer;
