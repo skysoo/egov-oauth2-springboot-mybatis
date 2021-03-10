@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="300">
+
+    <Properties>
+        <Property name="LOG_LOC">logs</Property>
+        <Property name="MAX">10</Property>
+        <Property name="LOG_NAME">sepas</Property>
+        <Property name="LOG_PATTERN">%d{yyyy.MM.dd HH:mm:ss.SSS} [%t] [%level] %c{1.} - %msg%n</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <RollingFile name="DebugAppender"
+                     fileName="${LOG_LOC}/${LOG_NAME}-debug.log" filePattern="${LOG_LOC}/${LOG_NAME}-debug_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+            <LevelRangeFilter minLevel="DEBUG" maxLevel = "DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+<!--            <DefaultRolloverStrategy>-->
+<!--                <Delete basePath="/logs" maxDepth="3">-->
+<!--                    <IfLastModified age = "30d"/>-->
+<!--                </Delete>-->
+<!--            </DefaultRolloverStrategy>-->
+        </RollingFile>
+
+        <RollingFile name="InfoAppender"
+                     fileName="${LOG_LOC}/${LOG_NAME}-info.log" filePattern="${LOG_LOC}/${LOG_NAME}-info_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="${LOG_PATTERN} %throwable{full}" />
+            <LevelRangeFilter minLevel="INFO" maxLevel = "INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+<!--            <DefaultRolloverStrategy>-->
+<!--                <Delete basePath="/logs" maxDepth="3">-->
+<!--                    <IfLastModified age = "30d"/>-->
+<!--                </Delete>-->
+<!--            </DefaultRolloverStrategy>-->
+        </RollingFile>
+
+        <RollingFile name="FatalAppender"
+                     fileName="${LOG_LOC}/${LOG_NAME}-fatal.log" filePattern="${LOG_LOC}/${LOG_NAME}-fatal_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="${LOG_PATTERN} %throwable{full}" />
+            <LevelRangeFilter minLevel="FATAL" maxLevel = "FATAL" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+<!--            <DefaultRolloverStrategy>-->
+<!--                <Delete basePath="/logs" maxDepth="3">-->
+<!--                    <IfLastModified age = "10d"/>-->
+<!--                </Delete>-->
+<!--            </DefaultRolloverStrategy>-->
+        </RollingFile>
+
+        <RollingFile name="WarnAppender"
+                     fileName="${LOG_LOC}/${LOG_NAME}-warn.log" filePattern="${LOG_LOC}/${LOG_NAME}-warn_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="${LOG_PATTERN} %throwable{full}" />
+            <LevelRangeFilter minLevel="WARN" maxLevel = "WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+<!--            <DefaultRolloverStrategy>-->
+<!--                <Delete basePath="/logs" maxDepth="3">-->
+<!--                    <IfLastModified age = "60d"/>-->
+<!--                </Delete>-->
+<!--            </DefaultRolloverStrategy>-->
+        </RollingFile>
+
+        <RollingFile name="ErrorAppender"
+                     fileName="${LOG_LOC}/${LOG_NAME}-error.log" filePattern="${LOG_LOC}/${LOG_NAME}-error_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+            <LevelRangeFilter minLevel="ERROR" maxLevel = "ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+<!--            <DefaultRolloverStrategy>-->
+<!--                <Delete basePath="/logs" maxDepth="3">-->
+<!--                    <IfLastModified age = "60d"/>-->
+<!--                </Delete>-->
+<!--            </DefaultRolloverStrategy>-->
+        </RollingFile>
+
+        <RollingFile name="AllAppender"
+                     fileName="${LOG_LOC}/${LOG_NAME}-all.log" filePattern="${LOG_LOC}/${LOG_NAME}-all_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+            <LevelRangeFilter minLevel="FATAL" maxLevel = "DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="/logs" maxDepth="3">
+                    <IfLastModified age = "60d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+<!--        <Logger name="com.sepas" additivity="true">-->
+<!--            <AppenderRef ref="FatalAppender" />-->
+<!--            <AppenderRef ref="DebugAppender" />-->
+<!--            <AppenderRef ref="InfoAppender" />-->
+<!--            <AppenderRef ref="WarnAppender" />-->
+<!--            <AppenderRef ref="ErrorAppender" />-->
+<!--        </Logger>-->
+
+        <Root level="DEBUG">
+            <AppenderRef ref="console" />
+<!--            <AppenderRef ref="FatalAppender" />-->
+<!--            <AppenderRef ref="DebugAppender" />-->
+<!--            <AppenderRef ref="InfoAppender" />-->
+<!--            <AppenderRef ref="WarnAppender" />-->
+<!--            <AppenderRef ref="ErrorAppender" />-->
+            <AppenderRef ref="AllAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>
