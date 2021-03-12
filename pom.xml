@@ -188,17 +188,6 @@
 
     <repositories>
         <repository>
-            <id>thirdparty</id>
-            <url>http://192.168.10.249:8081/nexus/content/repositories/thirdparty/</url>
-            <!--            <releases>-->
-            <!--                <enabled>true</enabled>-->
-            <!--            </releases>-->
-            <!--            <snapshots>-->
-            <!--                <enabled>true</enabled>-->
-            <!--            </snapshots>-->
-        </repository>
-
-        <repository>
             <id>mvn2s</id>
             <url>https://repo1.maven.org/maven2/</url>
             <releases>
@@ -210,7 +199,7 @@
         </repository>
         <repository>
             <id>egovframe</id>
-            <url>http://maven.egovframe.kr:8080/maven/</url>
+            <url>http://maven.egovframe.kr/maven/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
